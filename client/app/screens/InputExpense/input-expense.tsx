@@ -22,7 +22,7 @@ import { Picker } from "@react-native-picker/picker";
 import { Switch } from "react-native";
 import { IconName, ICategory } from "@/types";
 
-import { styles } from "./styles.module";
+import styles from "./styles.module";
 
 // Category data with colors
 const defaultCategories = [

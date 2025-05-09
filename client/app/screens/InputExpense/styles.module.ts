@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     padding: 16,
     justifyContent: "flex-start", // Changed from 'center' to 'flex-start'
@@ -236,3 +236,5 @@ export const styles = StyleSheet.create({
     color: "#333",
   },
 });
+
+export default styles;

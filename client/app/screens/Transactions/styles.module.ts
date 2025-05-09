@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
@@ -13,6 +13,17 @@ export const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
+  },
+  monthHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  monthText: {
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#333",
   },
 
   headerTitle: {
@@ -174,3 +185,5 @@ export const styles = StyleSheet.create({
     marginLeft: 8,
   },
 });
+
+export default styles;

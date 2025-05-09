@@ -18,12 +18,13 @@ import { useRouter } from "expo-router";
 import {
   CategoryDoughnut,
   MonthlyTabs,
+  MonthlyTransactionBreakdown,
   RecentTransactions,
   SummaryCards,
 } from "@/components";
 import { ITransaction } from "@/types";
 
-import { styles } from "./styles.module";
+import styles from "./styles.module";
 import { weeklyBudget } from "@/data/budgetdata";
 
 // Sample transaction data - replace with your actual data source
@@ -80,18 +81,15 @@ const TransactionScreen = () => {
   const [transactions, setTransactions] = useState(sampleTransactions);
   const [filteredTransactions, setFilteredTransactions] =
     useState(sampleTransactions);
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedTransactions, setSelectedTransactions] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [showStartDatePicker, setShowStartDatePicker] = useState(false);
-  const [showEndDatePicker, setShowEndDatePicker] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [minAmount, setMinAmount] = useState("");
   const [maxAmount, setMaxAmount] = useState("");
   const [isSelectMode, setIsSelectMode] = useState(false);
-  const [useDateFilter, setUseDateFilter] = useState(false);
-  const [selectedWeeks, setSelectedWeeks] = useState([]); // array of week numbers or dates
 
   // Available categories
   const categories = [
@@ -102,6 +100,15 @@ const TransactionScreen = () => {
     { id: "Salary", name: "Salary" },
     { id: "Freelance", name: "Freelance" },
   ];
+
+  // Filter transactions based on the selected date
+  const filteredMonthlyTransactions = transactions.filter((tx) => {
+    const txDate = new Date(tx.date);
+    return (
+      txDate.getMonth() === currentDate.getMonth() &&
+      txDate.getFullYear() === currentDate.getFullYear()
+    );
+  });
 
   // Apply filters
   useEffect(() => {
@@ -209,6 +216,54 @@ const TransactionScreen = () => {
     }
   };
 
+  const dummyTransactions: ITransaction[] = [
+    {
+      id: "1",
+      date: "2025-05-03T10:00:00Z",
+      amount: 5,
+      type: "expense",
+      category: "snacks",
+      name: "",
+      icon: "filter",
+    },
+    {
+      id: "2",
+      date: "2025-05-04T12:00:00Z",
+      amount: 15,
+      type: "expense",
+      category: "food",
+      name: "",
+      icon: "filter",
+    },
+    {
+      id: "3",
+      date: "2025-05-05T08:00:00Z",
+      amount: 18,
+      type: "expense",
+      category: "transport",
+      name: "",
+      icon: "filter",
+    },
+    {
+      id: "4",
+      date: "2025-05-06T14:00:00Z",
+      amount: 20,
+      type: "expense",
+      category: "groceries",
+      name: "",
+      icon: "filter",
+    },
+    {
+      id: "5",
+      date: "2025-05-07T16:00:00Z",
+      amount: 40,
+      type: "expense",
+      category: "entertainment",
+      name: "",
+      icon: "filter",
+    },
+  ];
+
   // Render transaction item
   const renderTransactionItem = ({ item }) => (
     <TouchableOpacity
@@ -265,36 +320,19 @@ const TransactionScreen = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Header*/}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.push("/")}>
-          <MaterialIcons name="arrow-back" size={28} color="#4CAF50" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Transactions</Text>
-        <TouchableOpacity onPress={exportToCSV}>
-          <MaterialIcons name="file-download" size={24} color="#4CAF50" />
-        </TouchableOpacity>
-      </View>
-
-      <MonthlyTabs />
+      <MonthlyTabs onDateChange={setCurrentDate} />
 
       <SummaryCards />
+
       <View style={styles.filtersContainer}>
-        <CategoryDoughnut
-          transactions={[
-            { type: "expense", amount: 300, category: "Food" },
-            { type: "expense", amount: 120, category: "Transport" },
-            { type: "expense", amount: 180, category: "Shopping" },
-            { type: "expense", amount: 90, category: "Entertainment" },
-            { type: "expense", amount: 60, category: "Other" },
-          ]}
-        />
+        <CategoryDoughnut transactions={transactions} />
       </View>
-      {/* Transaction List */}
+
       <View>
-        <RecentTransactions
-          transactions={transactions}
-          weeklyBudget={weeklyBudget}
+        <MonthlyTransactionBreakdown
+          date={currentDate}
+          transactions={dummyTransactions}
+          monthlyBudget={600}
         />
       </View>
       {/* Bulk Actions Bar */}

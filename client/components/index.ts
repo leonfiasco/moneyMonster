@@ -14,6 +14,7 @@ import BudgetModal from "./BudgetModal";
 import SummaryCards from "./SummaryCards";
 import CategoryDoughnut from "./CategoryDoughnut";
 import MonthlyTabs from "./MonthlyTabs";
+import MonthlyTransactionBreakdown from "./MonthlyTransactions";
 
 export {
   Card,
@@ -33,4 +34,5 @@ export {
   SummaryCards,
   CategoryDoughnut,
   MonthlyTabs,
+  MonthlyTransactionBreakdown,
 };
