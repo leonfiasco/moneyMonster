@@ -7,8 +7,9 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-// import connectDB from "./config/db";
+import connectDB from "./config/db";
 import CustomError from "./errors/CustomError";
+import incomeRoutes from "./routes/income";
 
 // const errorHandler = require("./middleware/error");
 
@@ -16,13 +17,15 @@ const app = express();
 
 require("dotenv").config();
 
-// connectDB();
+connectDB();
 
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+
+app.use("/income", incomeRoutes);
 
 // handles all non existing routes
 app.all("*", (req, res, next) => {

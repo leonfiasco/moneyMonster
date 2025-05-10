@@ -241,9 +241,6 @@ export default function AddExpenseScreen() {
           <>
             {/* Date Picker */}
             <Text style={styles.label}>Transaction Date</Text>
-            {/* Date Picker */}
-            {/* Date Picker */}
-            <Text style={styles.label}>Transaction Date</Text>
             <TouchableOpacity
               style={styles.textInputWrapper}
               onPress={() => setShowDatePicker(true)}
